@@ -49,7 +49,7 @@ export function useLocationSharing(userId: string) {
         console.error('Geolocation error:', err)
         setError(`Geolocation error: ${err.message} (code ${err.code})`)
       },
-      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 30000 }
     )
     setSharing(true)
   } catch (e: any) {
