@@ -18,5 +18,5 @@ export function clearCurrentUser() {
 }
 
 export function isValidUser(userId: string) {
-  return Object.values(USERS).includes(userId)
+  return (Object.values(USERS) as string[]).includes(userId)
 }
