@@ -17,11 +17,14 @@ import { SearchBar } from '@/components/SearchBar'
 import { fetchRoute, type RouteInfo } from '@/lib/directions'
 import { RevealModal } from '@/components/RevealModal'
 import { PinsPanel } from '@/components/PinsPanel'
+import { LoveNote } from '@/components/LoveNote'
+import { hasSeenLoveNote, markLoveNoteSeen } from '@/lib/loveNote'
+import { useVerifiedUser } from '@/hooks/useVerifiedUser'
+
 
 export default function MapPage() {
   const router = useRouter()
-  const [userId, setUserId] = useState<string | null>(null)
-  const [checked, setChecked] = useState(false)
+  const { userId, checked } = useVerifiedUser()
   const { config } = useAdminConfig()
 
   const [placementMode, setPlacementMode] = useState(false)
@@ -38,15 +41,12 @@ export default function MapPage() {
   const [panelOpen, setPanelOpen] = useState(false)
   const [skipRevealAnimation, setSkipRevealAnimation] = useState(false)
 
+  const [showLoveNote, setShowLoveNote] = useState(false)
   useEffect(() => {
-    const existing = getCurrentUser()
-    if (!existing) {
+    if (checked && !userId) {
       router.replace('/')
-    } else {
-      setUserId(existing)
-      setChecked(true)
     }
-  }, [router])
+  }, [checked, userId, router])
 
   const { myPosition, startSharing, sharing, error } = useLocationSharing(userId ?? '')
   const partnerId = userId === USERS.Samir ? USERS.Neha : USERS.Samir
@@ -115,6 +115,12 @@ export default function MapPage() {
       setRemainingKm(null)
     }
   }, [remainingKm])
+
+    useEffect(() => {
+    if (userId === USERS.Neha && !hasSeenLoveNote()) {
+      setShowLoveNote(true)
+    }
+  }, [userId])
 
   if (!checked || !userId) return null
 
@@ -301,6 +307,14 @@ export default function MapPage() {
               setRevealModalPin(pin)
               setPanelOpen(false)
             }
+          }}
+        />
+      )}
+        {showLoveNote && (
+        <LoveNote
+          onDismiss={() => {
+            markLoveNoteSeen()
+            setShowLoveNote(false)
           }}
         />
       )}
