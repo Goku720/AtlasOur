@@ -45,7 +45,7 @@ Built as a cozy alternative to a plain map app: think *Animal Crossing* / *Zelda
 
 - **Bucket-list pins** — drop a pin anywhere for a place you want to go together. It stays locked until you're physically there.
 - **Time capsules** — leave a note or photo behind, sealed until proximity (and sometimes your partner) unlocks it.
-- **Fog-of-war** — the map starts desaturated and grayscale; places you've actually explored reveal themselves in full color.
+- **Fog-of-war** — the map starts desaturated and grayscale; places you've actually explored reveal themselves in full color. (Plan to implement in future)
 - **Character avatars** — each partner has their own avatar on the map, with idle, in-range, and celebrate animation states.
 - **No location history** — only your *current* position is ever stored, and only while location sharing is active. Nothing is logged over time.
 
